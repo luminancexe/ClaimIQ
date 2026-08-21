@@ -208,7 +208,7 @@ ClaimIQ is being developed incrementally.
         Claims Services    QA Engine        Reporting
               │                │                │
               │                ▼                │
-              │          SQL Validation        │
+              │          SQL Validation         │
               │                │                │
               └────────────────┼────────────────┘
                                ▼
