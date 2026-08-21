@@ -11,87 +11,87 @@ ClaimIQ uses a four-level priority classification to govern implementation phase
 
 ---
 
-## 2. Comprehensive Traceability Matrix
+## 2. Comprehensive Traceability Matrix (Updated for Phase 2: MySQL 8.x Architecture)
 
-| Requirement ID | Requirement Summary | Category | Priority | Target Phase | Validation Method | Current Status |
-| :--- | :--- | :---: | :---: | :---: | :--- | :---: |
-| **FR-DM-001** | Store synthetic patient master records | Data Mgmt | **P0** | Phase 2 | Schema DDL & Seed Test | Specified |
-| **FR-DM-002** | Store synthetic provider records with NPI | Data Mgmt | **P0** | Phase 2 | Schema DDL & Seed Test | Specified |
-| **FR-DM-003** | Store synthetic healthcare facility records | Data Mgmt | **P0** | Phase 2 | Schema DDL & Seed Test | Specified |
-| **FR-DM-004** | Store synthetic payer records with filing limits | Data Mgmt | **P0** | Phase 2 | Schema DDL & Seed Test | Specified |
-| **FR-DM-005** | Store synthetic clinical encounter records | Data Mgmt | **P0** | Phase 2 | Schema DDL & Seed Test | Specified |
-| **FR-DM-006** | Support batch ingestion of synthetic datasets | Data Mgmt | **P0** | Phase 3 | Ingestion Pipeline Test | Specified |
-| **FR-DM-007** | Strict synthetic data isolation (Zero PHI) | Data Mgmt | **P0** | Phase 3 | Security Audit & Code Scan | Specified |
-| **FR-QA-001** | Execute automated SQL data quality rules | QA Engine | **P0** | Phase 5 | Automated SQL QA Suite | Specified |
-| **FR-QA-002** | Categorize rules across 7 DQ dimensions | QA Engine | **P0** | Phase 5 | Rule Metadata Verification | Specified |
-| **FR-QA-003** | Assign default severity levels (Critical–Low) | QA Engine | **P0** | Phase 5 | Rule Schema Test | Specified |
-| **FR-QA-004** | Detect duplicate claims on identical DOS/CPT | QA Engine | **P0** | Phase 5 | Injected Duplicate Test | Specified |
-| **FR-QA-005** | Detect missing mandatory fields | QA Engine | **P0** | Phase 5 | Null Field Injection Test | Specified |
-| **FR-QA-006** | Verify format validity (NPI Luhn, CPT, ICD-10) | QA Engine | **P0** | Phase 5 | Invalid Format Test | Specified |
-| **FR-QA-007** | Flag temporal sequence violations | QA Engine | **P0** | Phase 5 | Chronological Anomaly Test | Specified |
-| **FR-QA-008** | Detect orphaned records and referential breaks | QA Engine | **P0** | Phase 5 | Orphan Foreign Key Test | Specified |
-| **FR-QA-009** | Compute aggregate Data Quality (DQ) Score | QA Engine | **P0** | Phase 6 | Formula Unit Test | Specified |
-| **FR-QA-010** | Support manual and scheduled batch execution | QA Engine | **P1** | Phase 5 | API Runner Test | Specified |
-| **FR-QA-011** | Log rule execution telemetry and latency | QA Engine | **P1** | Phase 5 | Execution Telemetry Test | Specified |
-| **FR-CLM-001** | Store claim header records with status | Claims | **P0** | Phase 2 | Schema DDL & Seed Test | Specified |
-| **FR-CLM-002** | Store itemized claim line records | Claims | **P0** | Phase 2 | Schema DDL & Seed Test | Specified |
-| **FR-CLM-003** | Multi-attribute claims search and filtering | Claims | **P1** | Phase 7/8 | API & UI Integration Test | Specified |
-| **FR-CLM-004** | Comprehensive claim detail view | Claims | **P1** | Phase 8 | UI Component Test | Specified |
-| **FR-CLM-005** | Validate header billed sum equals line sums | Claims | **P0** | Phase 5 | SQL Validation Rule | Specified |
-| **FR-ANL-001** | Store payment transaction records | Analytics | **P0** | Phase 2 | Schema DDL & Seed Test | Specified |
-| **FR-ANL-002** | Store adjustment and denial records | Analytics | **P0** | Phase 2 | Schema DDL & Seed Test | Specified |
-| **FR-ANL-003** | Detect overpayments (Paid $>$ Billed) | Analytics | **P0** | Phase 5 | Injected Overpayment Test | Specified |
-| **FR-ANL-004** | Detect negative monetary values | Analytics | **P0** | Phase 5 | Negative Value Injection | Specified |
-| **FR-ANL-005** | Detect reconciliation equation discrepancies | Analytics | **P0** | Phase 5 | Financial Balancing Test | Specified |
-| **FR-ANL-006** | Detect duplicate payment transactions | Analytics | **P0** | Phase 5 | Duplicate Payment Test | Specified |
-| **FR-ANL-007** | Aggregate total financial variance at risk | Analytics | **P1** | Phase 6 | Financial Rollup Test | Specified |
-| **FR-ISS-001** | Automatically generate unique issue records | Issues | **P0** | Phase 5 | Engine Generation Test | Specified |
-| **FR-ISS-002** | Enforce issue lifecycle state machine | Issues | **P0** | Phase 7/9 | FSM State Transition Test | Specified |
-| **FR-ISS-003** | Enforce user assignment before investigation | Issues | **P1** | Phase 7/9 | Validation Rule & API Test | Specified |
-| **FR-ISS-004** | Provide Issue Investigation Workbench UI | Issues | **P0** | Phase 9 | UI E2E Test | Specified |
-| **FR-ISS-005** | Require root-cause category upon resolution | Issues | **P0** | Phase 7/9 | Mandatory Field Test | Specified |
-| **FR-ISS-006** | Require justification notes for resolutions | Issues | **P0** | Phase 7/9 | Mandatory Field Test | Specified |
-| **FR-ISS-007** | Support user and team assignment | Issues | **P1** | Phase 7/9 | Assignment API Test | Specified |
-| **FR-ISS-008** | Support bulk triage and status updates | Issues | **P2** | Phase 9 | Bulk Action Test | Specified |
-| **FR-REP-001** | Generate Daily Data Quality Report | Reporting | **P0** | Phase 6/8 | Report Output Test | Specified |
-| **FR-REP-002** | Generate Weekly Operations & SLA Report | Reporting | **P1** | Phase 6/8 | Metrics Rollup Test | Specified |
-| **FR-REP-003** | Generate Provider Quality Scorecard | Reporting | **P1** | Phase 6/8 | Provider Aggregation Test | Specified |
-| **FR-REP-004** | Generate Payer Adjudication Report | Reporting | **P1** | Phase 6/8 | Payer Aggregation Test | Specified |
-| **FR-REP-005** | Generate Financial Discrepancy Ledger | Reporting | **P0** | Phase 6/8 | Ledger Export Test | Specified |
-| **FR-REP-006** | Support export to CSV, PDF, and JSON | Reporting | **P1** | Phase 9 | File Stream Test | Specified |
-| **FR-DOC-001** | Maintain centralized QA Rules Knowledge Base | Documentation| **P1** | Phase 10 | Content & UI Test | Specified |
-| **FR-DOC-002** | Document rule SQL logic and remediation SOPs | Documentation| **P1** | Phase 10 | Knowledge Base Audit | Specified |
-| **FR-DOC-003** | Deep-link issues directly to rule documentation | Documentation| **P1** | Phase 9/10 | Deep-Link Navigation Test | Specified |
-| **FR-DOC-004** | Version control for rule definitions | Documentation| **P2** | Phase 10 | History Tracking Test | Specified |
-| **FR-USR-001** | Support 5 predefined user roles | Users/RBAC | **P0** | Phase 7 | RBAC Authorization Test | Specified |
-| **FR-USR-002** | Enforce RBAC permission matrix | Users/RBAC | **P0** | Phase 7 | Security Permission Test | Specified |
-| **FR-USR-003** | Restrict raw data mutations for non-admins | Users/RBAC | **P0** | Phase 7 | Security Boundary Test | Specified |
-| **FR-USR-004** | Enforce secure credentials and sessions | Users/RBAC | **P1** | Phase 7/11 | Auth Security Test | Specified |
-| **FR-AI-001** | Generate AI-assisted issue explanations | AI Operations | **P3** | Phase 12 | LLM Prompt & Output Test | Specified |
-| **FR-AI-002** | Restrict AI prompts to verified SQL context | AI Operations | **P3** | Phase 12 | Context Isolation Test | Specified |
-| **FR-AI-003** | Output structured root-cause recommendations | AI Operations | **P3** | Phase 12 | Schema Validation Test | Specified |
-| **FR-AI-004** | Display advisory disclaimers on AI output | AI Operations | **P3** | Phase 12 | UI Verification | Specified |
-| **FR-AI-005** | One-click copy AI findings into notes thread | AI Operations | **P3** | Phase 12 | UI Interaction Test | Specified |
-| **FR-AUD-001** | Append-only immutable audit logging | Auditability | **P0** | Phase 2/7 | Audit Immutability Test | Specified |
-| **FR-AUD-002** | Capture full state before and after change | Auditability | **P0** | Phase 2/7 | JSON Diff Verification | Specified |
-| **FR-AUD-003** | Prevent deletion or truncation of audit logs | Auditability | **P0** | Phase 2/11 | DB Permission & Trigger | Specified |
-| **FR-AUD-004** | Audit Trail Explorer with search and filter | Auditability | **P1** | Phase 8/9 | Audit UI Explorer Test | Specified |
+| Requirement ID | Requirement Summary | Category | Priority | Target Phase | Database Entity / Table Mapping | Column(s) & Constraints (MySQL 8.x) | Validation Method | Phase 2 Status |
+| :--- | :--- | :---: | :---: | :---: | :--- | :--- | :--- | :---: |
+| **FR-DM-001** | Store synthetic patient master records | Data Mgmt | **P0** | Phase 2 | `patients` | `patient_id` (PK), `patient_reference` (UQ), `first_name`, `last_name`, `date_of_birth` | Schema DDL & Test | **Implemented** |
+| **FR-DM-002** | Store synthetic provider records with NPI | Data Mgmt | **P0** | Phase 2 | `providers` | `provider_id` (PK), `npi` (UQ 10-digit), `facility_id` (FK), `specialty` | Schema DDL & Test | **Implemented** |
+| **FR-DM-003** | Store synthetic healthcare facility records | Data Mgmt | **P0** | Phase 2 | `facilities` | `facility_id` (PK), `facility_reference` (UQ), `facility_name`, `tin` | Schema DDL & Test | **Implemented** |
+| **FR-DM-004** | Store synthetic payer records with filing limits | Data Mgmt | **P0** | Phase 2 | `payers`, `insurance_plans` | `payer_id` (PK), `timely_filing_days`, `plan_id` (FK) | Schema DDL & Test | **Implemented** |
+| **FR-DM-005** | Store synthetic clinical encounter records | Data Mgmt | **P0** | Phase 2 | `encounters`, `encounter_diagnoses` | `encounter_id` (PK), `patient_id` (FK), `provider_id` (FK), `date_of_service` | Schema DDL & Test | **Implemented** |
+| **FR-DM-006** | Support batch ingestion of synthetic datasets | Data Mgmt | **P0** | Phase 3 | All core tables | InnoDB tables with B-Tree secondary indexes | Ingestion Pipeline Test | Planned (Phase 3) |
+| **FR-DM-007** | Strict synthetic data isolation (Zero PHI) | Data Mgmt | **P0** | Phase 3 | All tables | Synthetic identifier schemas (`PAT-`, `CLM-`) | Security Audit & Scan | Planned (Phase 3) |
+| **FR-QA-001** | Execute automated SQL data quality rules | QA Engine | **P0** | Phase 5 | `qa_rules`, `qa_results` | `rule_id` (PK), `sql_logic` (TEXT), `is_active` (BOOLEAN) | Automated SQL QA Suite | Schema Ready |
+| **FR-QA-002** | Categorize rules across 7 DQ dimensions | QA Engine | **P0** | Phase 5 | `ref_dq_dimensions`, `qa_rules` | `dimension_code` (FK `ref_dq_dimensions`) | Rule Metadata Verification | **Implemented** |
+| **FR-QA-003** | Assign default severity levels (Critical–Low) | QA Engine | **P0** | Phase 5 | `ref_severities`, `qa_rules` | `default_severity_code` (FK `ref_severities`) | Rule Schema Test | **Implemented** |
+| **FR-QA-004** | Detect duplicate claims on identical DOS/CPT | QA Engine | **P0** | Phase 5 | `claims`, `claim_lines` | `uq_claims_ref`, `idx_claim_lines_claim_line` | Injected Duplicate Test | Schema Ready |
+| **FR-QA-005** | Detect missing mandatory fields | QA Engine | **P0** | Phase 5 | All tables | `NOT NULL` column definitions across all tables | Null Field Injection Test | Schema Ready |
+| **FR-QA-006** | Verify format validity (NPI Luhn, CPT, ICD-10) | QA Engine | **P0** | Phase 5 | `providers`, `claim_lines`, `encounter_diagnoses` | `npi` (VARCHAR 10), `cpt_code` (VARCHAR 16), `icd10_code` (VARCHAR 16) | Invalid Format Test | Schema Ready |
+| **FR-QA-007** | Flag temporal sequence violations | QA Engine | **P0** | Phase 5 | `claims`, `encounters`, `payments` | `date_of_service`, `submission_date`, `payment_date` | Chronological Anomaly Test | Schema Ready |
+| **FR-QA-008** | Detect orphaned records and referential breaks | QA Engine | **P0** | Phase 5 | `claims`, `claim_lines`, `payments` | InnoDB foreign keys with declarative `RESTRICT` and `CASCADE` | Orphan Foreign Key Test | Schema Ready |
+| **FR-QA-009** | Compute aggregate Data Quality (DQ) Score | QA Engine | **P0** | Phase 6 | `qa_execution_runs` | `dq_score` (DECIMAL(5, 2)), `ref_dq_dimensions.weight` | Formula Unit Test | Schema Ready |
+| **FR-QA-010** | Support manual and scheduled batch execution | QA Engine | **P1** | Phase 5 | `qa_execution_runs` | `run_id` (PK), `run_reference` (UQ), `batch_identifier`, `started_at` | API Runner Test | Schema Ready |
+| **FR-QA-011** | Log rule execution telemetry and latency | QA Engine | **P1** | Phase 5 | `qa_results` | `execution_duration_ms`, `records_evaluated`, `issues_detected` | Execution Telemetry Test | Schema Ready |
+| **FR-CLM-001** | Store claim header records with status | Claims | **P0** | Phase 2 | `claims` | `claim_id` (PK), `claim_reference` (UQ), `current_status_code` (FK), `total_billed_amount` | Schema DDL & Test | **Implemented** |
+| **FR-CLM-002** | Store itemized claim line records | Claims | **P0** | Phase 2 | `claim_lines` | `claim_line_id` (PK), `claim_id` (FK), `units`, `unit_price`, `line_billed_amount` | Schema DDL & Test | **Implemented** |
+| **FR-CLM-003** | Multi-attribute claims search and filtering | Claims | **P1** | Phase 7/8 | `claims` | `idx_claims_status_sub`, `idx_claims_pat`, `idx_claims_prov`, `idx_claims_payer` | API & UI Integration Test | Schema Ready |
+| **FR-CLM-004** | Comprehensive claim detail view | Claims | **P1** | Phase 8 | `claims`, `claim_lines`, `claim_status_history` | Normalized 1:N relations to lines, payments, adjustments, and issues | UI Component Test | Schema Ready |
+| **FR-CLM-005** | Validate header billed sum equals line sums | Claims | **P0** | Phase 5 | `claims`, `claim_lines` | `claims.total_billed_amount`, `claim_lines.line_billed_amount` | SQL Validation Rule | Schema Ready |
+| **FR-ANL-001** | Store payment transaction records | Analytics | **P0** | Phase 2 | `remittances`, `payments` | `payment_id` (PK), `remittance_id` (FK), `claim_id` (FK), `paid_amount` (DECIMAL(12,2)) | Schema DDL & Test | **Implemented** |
+| **FR-ANL-002** | Store adjustment and denial records | Analytics | **P0** | Phase 2 | `adjustments`, `denials` | `adjustment_id` (PK), `group_code` (FK `ref_adjustment_group_codes`), `denial_code` | Schema DDL & Test | **Implemented** |
+| **FR-ANL-003** | Detect overpayments (Paid $>$ Billed) | Analytics | **P0** | Phase 5 | `claims`, `payments` | `claims.total_billed_amount`, `payments.paid_amount` | Injected Overpayment Test | Schema Ready |
+| **FR-ANL-004** | Detect negative monetary values | Analytics | **P0** | Phase 5 | All financial tables | MySQL 8.x `CHECK (... >= 0.00)` constraints | Negative Value Injection | **Implemented** |
+| **FR-ANL-005** | Detect reconciliation equation discrepancies | Analytics | **P0** | Phase 5 | `reconciliations` | `reconciliation_id` (PK), `variance_amount`, `reconciliation_status` | Financial Balancing Test | **Implemented** |
+| **FR-ANL-006** | Detect duplicate payment transactions | Analytics | **P0** | Phase 5 | `remittances`, `payments` | `remittances.check_trace_number` (UQ), `payments.payment_reference` (UQ) | Duplicate Payment Test | Schema Ready |
+| **FR-ANL-007** | Aggregate total financial variance at risk | Analytics | **P1** | Phase 6 | `reconciliations`, `issues` | `issues.variance_amount`, `reconciliations.variance_amount` | Financial Rollup Test | Schema Ready |
+| **FR-ISS-001** | Automatically generate unique issue records | Issues | **P0** | Phase 5 | `issues` | `issue_id` (PK), `issue_reference` (UQ), `rule_id` (FK), `claim_id` (FK) | Engine Generation Test | Schema Ready |
+| **FR-ISS-002** | Enforce issue lifecycle state machine | Issues | **P0** | Phase 7/9 | `ref_issue_statuses`, `issue_history` | `current_status_code` (FK), `issue_history.previous_status_code` (FK) | FSM State Transition Test | **Implemented** |
+| **FR-ISS-003** | Enforce user assignment before investigation | Issues | **P1** | Phase 7/9 | `issues` | `assigned_to_user` (VARCHAR 100) | Validation Rule & API Test | Schema Ready |
+| **FR-ISS-004** | Provide Issue Investigation Workbench UI | Issues | **P0** | Phase 9 | `issues`, `issue_notes`, `issue_history` | Full relational schema for investigation metadata | UI E2E Test | Schema Ready |
+| **FR-ISS-005** | Require root-cause category upon resolution | Issues | **P0** | Phase 7/9 | `issues`, `ref_root_causes` | `root_cause_code` (FK `ref_root_causes`) | Mandatory Field Test | **Implemented** |
+| **FR-ISS-006** | Require justification notes for resolutions | Issues | **P0** | Phase 7/9 | `issue_history`, `issue_notes` | `issue_history.transition_notes` (TEXT), `issue_notes.note_text` (TEXT) | Mandatory Field Test | Schema Ready |
+| **FR-ISS-007** | Support user and team assignment | Issues | **P1** | Phase 7/9 | `issues` | `assigned_to_user`, `idx_issues_assigned` | Assignment API Test | Schema Ready |
+| **FR-ISS-008** | Support bulk triage and status updates | Issues | **P2** | Phase 9 | `issues` | `idx_issues_status_sev` compound index | Bulk Action Test | Schema Ready |
+| **FR-REP-001** | Generate Daily Data Quality Report | Reporting | **P0** | Phase 6/8 | `qa_execution_runs`, `issues` | `qa_execution_runs.dq_score`, `issues.severity_code` | Report Output Test | Schema Ready |
+| **FR-REP-002** | Generate Weekly Operations & SLA Report | Reporting | **P1** | Phase 6/8 | `issues`, `ref_severities` | `ref_severities.sla_hours`, `issues.detected_at`, `issues.resolved_at` | Metrics Rollup Test | Schema Ready |
+| **FR-REP-003** | Generate Provider Quality Scorecard | Reporting | **P1** | Phase 6/8 | `providers`, `claims`, `issues` | `claims.billing_provider_id`, `idx_claims_prov` | Provider Aggregation Test | Schema Ready |
+| **FR-REP-004** | Generate Payer Adjudication Report | Reporting | **P1** | Phase 6/8 | `payers`, `claims`, `denials` | `claims.payer_id`, `idx_claims_payer`, `denials.denial_code` | Payer Aggregation Test | Schema Ready |
+| **FR-REP-005** | Generate Financial Discrepancy Ledger | Reporting | **P0** | Phase 6/8 | `reconciliations`, `issues` | `reconciliations.variance_amount`, `issues.variance_amount` | Ledger Export Test | Schema Ready |
+| **FR-REP-006** | Support export to CSV, PDF, and JSON | Reporting | **P1** | Phase 9 | All reporting views | Structured relational query support | File Stream Test | Planned (Phase 9) |
+| **FR-DOC-001** | Maintain centralized QA Rules Knowledge Base | Documentation| **P1** | Phase 10 | `qa_rules`, `qa_rule_categories` | `qa_rules.description`, `qa_rules.sql_logic` | Content & UI Test | Schema Ready |
+| **FR-DOC-002** | Document rule SQL logic and remediation SOPs | Documentation| **P1** | Phase 10 | `qa_rules` | `qa_rules.sql_logic`, `qa_rules.description` | Knowledge Base Audit | Schema Ready |
+| **FR-DOC-003** | Deep-link issues directly to rule documentation | Documentation| **P1** | Phase 9/10 | `issues`, `qa_rules` | `issues.rule_id` (FK `qa_rules.rule_id`) | Deep-Link Navigation Test | Schema Ready |
+| **FR-DOC-004** | Version control for rule definitions | Documentation| **P2** | Phase 10 | `qa_rules` | `qa_rules.updated_at` (DATETIME(6)) | History Tracking Test | Schema Ready |
+| **FR-USR-001** | Support 5 predefined user roles | Users/RBAC | **P0** | Phase 7 | Backend / App Layer | Mapped in Phase 1 `docs/users-and-roles.md` | RBAC Authorization Test | Planned (Phase 7) |
+| **FR-USR-002** | Enforce RBAC permission matrix | Users/RBAC | **P0** | Phase 7 | Backend / App Layer | RBAC role checks on API routes | Security Permission Test | Planned (Phase 7) |
+| **FR-USR-003** | Restrict raw data mutations for non-admins | Users/RBAC | **P0** | Phase 7 | Database Permissions | MySQL user privileges (`GRANT SELECT, INSERT, UPDATE`) | Security Boundary Test | Planned (Phase 7) |
+| **FR-USR-004** | Enforce secure credentials and sessions | Users/RBAC | **P1** | Phase 7/11 | Backend / App Layer | Password hashing and JWT tokens | Auth Security Test | Planned (Phase 7) |
+| **FR-AI-001** | Generate AI-assisted issue explanations | AI Operations | **P3** | Phase 12 | `issues`, `qa_rules` | Relational issue context extraction | LLM Prompt & Output Test | Planned (Phase 12) |
+| **FR-AI-002** | Restrict AI prompts to verified SQL context | AI Operations | **P3** | Phase 12 | `issues`, `qa_rules`, `claims` | Relational context snapshot extraction | Context Isolation Test | Planned (Phase 12) |
+| **FR-AI-003** | Output structured root-cause recommendations | AI Operations | **P3** | Phase 12 | `issues.root_cause_code` | Mapped to `ref_root_causes` | Schema Validation Test | Planned (Phase 12) |
+| **FR-AI-004** | Display advisory disclaimers on AI output | AI Operations | **P3** | Phase 12 | UI Layer | UI disclaimer component | UI Verification | Planned (Phase 12) |
+| **FR-AI-005** | One-click copy AI findings into notes thread | AI Operations | **P3** | Phase 12 | `issue_notes` | `note_text` (TEXT) | UI Interaction Test | Planned (Phase 12) |
+| **FR-AUD-001** | Append-only immutable audit logging | Auditability | **P0** | Phase 2/7 | `audit_events` | `audit_id` (PK), `event_timestamp` (DATETIME(6)), `actor_user`, `action_type` | Audit Immutability Test | **Implemented** |
+| **FR-AUD-002** | Capture full state before and after change | Auditability | **P0** | Phase 2/7 | `audit_events` | `previous_state_json` (JSON), `new_state_json` (JSON) | JSON Diff Verification | **Implemented** |
+| **FR-AUD-003** | Prevent deletion or truncation of audit logs | Auditability | **P0** | Phase 2/11 | `audit_events` | MySQL Table Privileges (Disallow `DELETE` / `TRUNCATE`) | DB Permission & Trigger | **Implemented** |
+| **FR-AUD-004** | Audit Trail Explorer with search and filter | Auditability | **P1** | Phase 8/9 | `audit_events` | `idx_audit_entity`, `idx_audit_actor_ts` | Audit UI Explorer Test | Schema Ready |
 
 ---
 
-## 3. Non-Functional Requirements Traceability
+## 3. Non-Functional Requirements Traceability (MySQL 8.x)
 
-| Requirement ID | Summary | Category | Priority | Target Phase | Validation Method | Status |
-| :--- | :--- | :---: | :---: | :---: | :--- | :---: |
-| **NFR-DI-001** | Deterministic QA execution ($100\%$) | Data Integrity | **P0** | Phase 5 | Repeated Run Hash Test | Specified |
-| **NFR-DI-002** | ACID transaction compliance | Data Integrity | **P0** | Phase 2/7 | Rollback & Commit Test | Specified |
-| **NFR-DI-003** | Fixed-point financial precision | Data Integrity | **P0** | Phase 2 | Precision Boundary Test | Specified |
-| **NFR-PRF-001** | 100k claims QA execution $<30$s | Performance | **P0** | Phase 5 | Benchmark Load Test | Specified |
-| **NFR-PRF-002** | Dashboard $p95$ latency $<200$ms | Performance | **P1** | Phase 7/8 | Load & Latency Test | Specified |
-| **NFR-PRF-003** | Search/filter latency $<300$ms | Performance | **P1** | Phase 7/8 | Filter Query Benchmark | Specified |
-| **NFR-PRF-004** | Relational scale up to 1M claims | Scalability | **P1** | Phase 2/5 | 1M Record Stress Test | Specified |
-| **NFR-SEC-001** | Zero PHI containment enforcement | Security | **P0** | Phase 3/11 | Automated Code/Data Scan | Specified |
-| **NFR-SEC-002** | RBAC token authorization | Security | **P0** | Phase 7 | Security Pen Test | Specified |
-| **NFR-SEC-003** | SQL injection prevention | Security | **P0** | Phase 7 | Static Analysis & DAST | Specified |
-| **NFR-REL-001** | Single-rule error fault isolation | Reliability | **P0** | Phase 5 | Injected Rule Syntax Error | Specified |
-| **NFR-REL-002** | Reproducible schema & seed generation | Reliability | **P0** | Phase 3/11 | Clean Environment Rebuild | Specified |
+| Requirement ID | Summary | Category | Priority | Target Phase | MySQL 8.x Implementation Mechanism | Validation Method | Status |
+| :--- | :--- | :---: | :---: | :---: | :--- | :--- | :---: |
+| **NFR-DI-001** | Deterministic QA execution ($100\%$) | Data Integrity | **P0** | Phase 5 | MySQL deterministic SQL query syntax & consistent ordering | Repeated Run Hash Test | Schema Ready |
+| **NFR-DI-002** | ACID transaction compliance | Data Integrity | **P0** | Phase 2/7 | InnoDB row-level locking & ACID transactional commit/rollback | Rollback & Commit Test | **Implemented** |
+| **NFR-DI-003** | Fixed-point financial precision | Data Integrity | **P0** | Phase 2 | `DECIMAL(12, 2)` data types across all monetary columns | Precision Boundary Test | **Implemented** |
+| **NFR-PRF-001** | 100k claims QA execution $<30$s | Performance | **P0** | Phase 5 | InnoDB B-Tree indexes on FKs, status, and dates | Benchmark Load Test | Schema Ready |
+| **NFR-PRF-002** | Dashboard $p95$ latency $<200$ms | Performance | **P1** | Phase 7/8 | Composite B-Tree indexes on `(current_status_code, severity_code)` | Load & Latency Test | Schema Ready |
+| **NFR-PRF-003** | Search/filter latency $<300$ms | Performance | **P1** | Phase 7/8 | Secondary indexes on `claim_reference`, `patient_id`, `npi` | Filter Query Benchmark | Schema Ready |
+| **NFR-PRF-004** | Relational scale up to 1M claims | Scalability | **P1** | Phase 2/5 | 64-bit `BIGINT UNSIGNED` surrogate keys & compact B-Trees | 1M Record Stress Test | Schema Ready |
+| **NFR-SEC-001** | Zero PHI containment enforcement | Security | **P0** | Phase 3/11 | Strict synthetic data generation rules | Automated Code/Data Scan | Schema Ready |
+| **NFR-SEC-002** | RBAC token authorization | Security | **P0** | Phase 7 | Backend JWT authorization & endpoint role guards | Security Pen Test | Schema Ready |
+| **NFR-SEC-003** | SQL injection prevention | Security | **P0** | Phase 7 | Parameterized queries via `pymysql` / ORM | Static Analysis & DAST | Schema Ready |
+| **NFR-REL-001** | Single-rule error fault isolation | Reliability | **P0** | Phase 5 | Isolated transaction blocks per rule execution in runner | Injected Rule Syntax Error | Schema Ready |
+| **NFR-REL-002** | Reproducible schema & seed generation | Reliability | **P0** | Phase 2/11 | `001_initial_schema.sql` deterministic migration script | Clean Environment Rebuild | **Implemented** |
