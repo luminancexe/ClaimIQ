@@ -8,7 +8,7 @@ To ensure precise engineering focus and strict adherence to healthcare data gove
 graph TD
     subgraph "IN SCOPE (ClaimIQ Platform)"
         SYN[Synthetic Healthcare Data Generation]
-        SCHEMA[Relational Data Modeling - PostgreSQL]
+        SCHEMA[Relational Data Modeling - MySQL 8.x]
         RULES[SQL Data Quality & Validation Engine]
         ISSUE[Issue Investigation Workbench]
         ANL[Python Financial Analytics & KPI Engine]
@@ -33,7 +33,7 @@ graph TD
 
 ### 1.1 In-Scope Capabilities
 - **Synthetic Healthcare Data Architecture**: Highly realistic generation of patients, providers (NPIs), facilities, payers, encounters, claims, claim lines, payments, adjustments, and remittances.
-- **Relational Data Integrity**: Comprehensive PostgreSQL schema with referential constraints, indexing strategies, and migration tooling.
+- **Relational Data Integrity**: Comprehensive MySQL 8.x schema (InnoDB, utf8mb4) with referential constraints, indexing strategies, and migration tooling.
 - **SQL Data Quality Engine**: Modular, version-controlled validation queries covering the 7 core healthcare data quality dimensions.
 - **Synthetic Error Injection Suite**: Controlled, reproducible generation of edge cases, financial variances, temporal anomalies, and duplicate records.
 - **Operations & Investigation Workbench**: Centralized web interface for searching, filtering, triaging, investigating, assigning, and resolving data quality issues.
@@ -74,7 +74,7 @@ graph TD
 | Phase # | Phase Title | Core Objectives & Deliverables | Primary Dependencies |
 | :---: | :--- | :--- | :--- |
 | **Phase 1** | **Domain Research, Project Scope & Requirements Definition** | Comprehensive documentation suite (16 docs), use cases, FRs, NFRs, DQ framework, RTM, completion criteria. | None (Foundational) |
-| **Phase 2** | **Database Architecture & Data Modeling** | Relational DDL schema (PostgreSQL), indexes, foreign keys, views, audit tables, Alembic migrations. | Phase 1 Specifications |
+| **Phase 2** | **Database Architecture & Data Modeling** | Relational DDL schema (MySQL 8.x, InnoDB), indexes, foreign keys, views, audit tables, reproducible SQL migrations. | Phase 1 Specifications |
 | **Phase 3** | **Synthetic Data Generation Engine** | Python data generator (Faker/custom) producing realistic patients, providers, encounters, claims, claim lines, and payments. | Phase 2 Schema |
 | **Phase 4** | **Controlled Error Injection Framework** | Systematic injector introducing targeted anomalies (duplicates, missing fields, financial variances, temporal bugs) at configurable rates. | Phase 3 Data Generator |
 | **Phase 5** | **SQL QA Engine & Validation Rule Suite** | Modular SQL rule files, batch execution runner, telemetry logging, and automated issue record generation across 7 DQ dimensions. | Phase 2 Schema & Phase 4 Data |

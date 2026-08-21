@@ -238,7 +238,7 @@ Current planned technologies include:
 
 | Area | Technology |
 |---|---|
-| Database | PostgreSQL |
+| Database | MySQL 8.x (InnoDB, utf8mb4) |
 | Data Generation | Python |
 | Data Analysis | Python / Pandas |
 | Querying | SQL |
