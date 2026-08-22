@@ -302,7 +302,8 @@ docs/
 ├── project-scope.md
 └── requirements-traceability-matrix.md
 
-PHASE_1_COMPLETION_REPORT.md
+reports/
+└── PHASE_1_COMPLETION_REPORT.md
 ```
 
 Phase 1 established:
@@ -362,11 +363,11 @@ database/
 │
 └── validate_schema.py
 
-PHASE_2_COMPLETION_REPORT.md
+reports/
+└── PHASE_2_COMPLETION_REPORT.md
 ```
 
 Phase 2 established:
-
 - MySQL 8.x database architecture with InnoDB storage engine and utf8mb4 character set
 - Standardized temporal precision (`DATETIME(6)` in UTC) and exact financial precision (`DECIMAL(12,2)`)
 - 22 normalized tables and 124 documented columns
@@ -425,7 +426,8 @@ tests/
 ├── test_distributions.py
 └── test_generation.py
 
-PHASE_3_COMPLETION_REPORT.md
+reports/
+└── PHASE_3_COMPLETION_REPORT.md
 ```
 
 Phase 3 established:
