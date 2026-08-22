@@ -557,15 +557,15 @@ The final ClaimIQ platform will provide a simulated end-to-end environment for h
 ```text
 Synthetic Claims Data
         ↓
-Database
+    Database
         ↓
-Automated QA
+  Automated QA
         ↓
 Data Quality Analysis
         ↓
-Issue Detection
+ Issue Detection
         ↓
-Investigation
+ Investigation
         ↓
 Resolution / Escalation
         ↓
