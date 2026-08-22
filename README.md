@@ -533,7 +533,7 @@ Requirements
      ↓
 Architecture
      ↓
-Data
+    Data
      ↓
 Validation
      ↓
@@ -543,7 +543,7 @@ Application
      ↓
 Operations
      ↓
-AI
+    AI
 ```
 
 rather than attempting to build the entire platform simultaneously.
