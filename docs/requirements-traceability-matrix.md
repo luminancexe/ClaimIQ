@@ -11,39 +11,39 @@ ClaimIQ uses a four-level priority classification to govern implementation phase
 
 ---
 
-## 2. Comprehensive Traceability Matrix (Updated for Phase 2: MySQL 8.x Architecture)
+## 2. Comprehensive Traceability Matrix (Updated for Phase 3: Synthetic Data Generation)
 
-| Requirement ID | Requirement Summary | Category | Priority | Target Phase | Database Entity / Table Mapping | Column(s) & Constraints (MySQL 8.x) | Validation Method | Phase 2 Status |
+| Requirement ID | Requirement Summary | Category | Priority | Target Phase | Implementation Module / Entity | Column(s) & Constraints (MySQL 8.x) | Validation Method | Current Status |
 | :--- | :--- | :---: | :---: | :---: | :--- | :--- | :--- | :---: |
-| **FR-DM-001** | Store synthetic patient master records | Data Mgmt | **P0** | Phase 2 | `patients` | `patient_id` (PK), `patient_reference` (UQ), `first_name`, `last_name`, `date_of_birth` | Schema DDL & Test | **Implemented** |
-| **FR-DM-002** | Store synthetic provider records with NPI | Data Mgmt | **P0** | Phase 2 | `providers` | `provider_id` (PK), `npi` (UQ 10-digit), `facility_id` (FK), `specialty` | Schema DDL & Test | **Implemented** |
-| **FR-DM-003** | Store synthetic healthcare facility records | Data Mgmt | **P0** | Phase 2 | `facilities` | `facility_id` (PK), `facility_reference` (UQ), `facility_name`, `tin` | Schema DDL & Test | **Implemented** |
-| **FR-DM-004** | Store synthetic payer records with filing limits | Data Mgmt | **P0** | Phase 2 | `payers`, `insurance_plans` | `payer_id` (PK), `timely_filing_days`, `plan_id` (FK) | Schema DDL & Test | **Implemented** |
-| **FR-DM-005** | Store synthetic clinical encounter records | Data Mgmt | **P0** | Phase 2 | `encounters`, `encounter_diagnoses` | `encounter_id` (PK), `patient_id` (FK), `provider_id` (FK), `date_of_service` | Schema DDL & Test | **Implemented** |
-| **FR-DM-006** | Support batch ingestion of synthetic datasets | Data Mgmt | **P0** | Phase 3 | All core tables | InnoDB tables with B-Tree secondary indexes | Ingestion Pipeline Test | Planned (Phase 3) |
-| **FR-DM-007** | Strict synthetic data isolation (Zero PHI) | Data Mgmt | **P0** | Phase 3 | All tables | Synthetic identifier schemas (`PAT-`, `CLM-`) | Security Audit & Scan | Planned (Phase 3) |
+| **FR-DM-001** | Store synthetic patient master records | Data Mgmt | **P0** | Phase 2/3 | `generator/generators/patients.py` | `patient_id` (PK), `patient_reference` (UQ), `first_name`, `last_name`, `date_of_birth` | Unit Test & SQL Validation | **Implemented** |
+| **FR-DM-002** | Store synthetic provider records with NPI | Data Mgmt | **P0** | Phase 2/3 | `generator/generators/providers.py` | `provider_id` (PK), `npi` (UQ 10-digit), `facility_id` (FK), `specialty` | Luhn Unit Test & SQL Audit | **Implemented** |
+| **FR-DM-003** | Store synthetic healthcare facility records | Data Mgmt | **P0** | Phase 2/3 | `generator/generators/facilities.py` | `facility_id` (PK), `facility_reference` (UQ), `facility_name`, `tin` | Unit Test & SQL Validation | **Implemented** |
+| **FR-DM-004** | Store synthetic payer records with filing limits | Data Mgmt | **P0** | Phase 2/3 | `generator/generators/payers.py` | `payer_id` (PK), `timely_filing_days`, `plan_id` (FK) | Unit Test & SQL Validation | **Implemented** |
+| **FR-DM-005** | Store synthetic clinical encounter records | Data Mgmt | **P0** | Phase 2/3 | `generator/generators/encounters.py` | `encounter_id` (PK), `patient_id` (FK), `provider_id` (FK), `date_of_service` | Chronology Test & SQL Audit | **Implemented** |
+| **FR-DM-006** | Support batch ingestion of synthetic datasets | Data Mgmt | **P0** | Phase 3 | `generator/database.py` (`bulk_insert`) | Parameterized `executemany` chunking (2,500 rows) | Scale Benchmark Test | **Implemented** |
+| **FR-DM-007** | Strict synthetic data isolation (Zero PHI) | Data Mgmt | **P0** | Phase 3 | All generator modules | Synthetic identifier schemas (`PAT-`, `CLM-`, `PRV-`) | Automated Validation Suite | **Implemented** |
 | **FR-QA-001** | Execute automated SQL data quality rules | QA Engine | **P0** | Phase 5 | `qa_rules`, `qa_results` | `rule_id` (PK), `sql_logic` (TEXT), `is_active` (BOOLEAN) | Automated SQL QA Suite | Schema Ready |
 | **FR-QA-002** | Categorize rules across 7 DQ dimensions | QA Engine | **P0** | Phase 5 | `ref_dq_dimensions`, `qa_rules` | `dimension_code` (FK `ref_dq_dimensions`) | Rule Metadata Verification | **Implemented** |
 | **FR-QA-003** | Assign default severity levels (Critical–Low) | QA Engine | **P0** | Phase 5 | `ref_severities`, `qa_rules` | `default_severity_code` (FK `ref_severities`) | Rule Schema Test | **Implemented** |
 | **FR-QA-004** | Detect duplicate claims on identical DOS/CPT | QA Engine | **P0** | Phase 5 | `claims`, `claim_lines` | `uq_claims_ref`, `idx_claim_lines_claim_line` | Injected Duplicate Test | Schema Ready |
 | **FR-QA-005** | Detect missing mandatory fields | QA Engine | **P0** | Phase 5 | All tables | `NOT NULL` column definitions across all tables | Null Field Injection Test | Schema Ready |
-| **FR-QA-006** | Verify format validity (NPI Luhn, CPT, ICD-10) | QA Engine | **P0** | Phase 5 | `providers`, `claim_lines`, `encounter_diagnoses` | `npi` (VARCHAR 10), `cpt_code` (VARCHAR 16), `icd10_code` (VARCHAR 16) | Invalid Format Test | Schema Ready |
-| **FR-QA-007** | Flag temporal sequence violations | QA Engine | **P0** | Phase 5 | `claims`, `encounters`, `payments` | `date_of_service`, `submission_date`, `payment_date` | Chronological Anomaly Test | Schema Ready |
-| **FR-QA-008** | Detect orphaned records and referential breaks | QA Engine | **P0** | Phase 5 | `claims`, `claim_lines`, `payments` | InnoDB foreign keys with declarative `RESTRICT` and `CASCADE` | Orphan Foreign Key Test | Schema Ready |
+| **FR-QA-006** | Verify format validity (NPI Luhn, CPT, ICD-10) | QA Engine | **P0** | Phase 3/5 | `generator/identifiers.py` (`validate_npi`) | `npi` (VARCHAR 10), `cpt_code` (VARCHAR 16), `icd10_code` (VARCHAR 16) | NPI Unit Test & SQL Audit | **Implemented** |
+| **FR-QA-007** | Flag temporal sequence violations | QA Engine | **P0** | Phase 3/5 | `generator/dates.py` | `date_of_service`, `submission_date`, `payment_date` | Chronology Test & SQL Audit | **Implemented** |
+| **FR-QA-008** | Detect orphaned records and referential breaks | QA Engine | **P0** | Phase 3/5 | `generator/validators.py` | InnoDB foreign keys with declarative `RESTRICT` and `CASCADE` | SQL Orphan Audit Check | **Implemented** |
 | **FR-QA-009** | Compute aggregate Data Quality (DQ) Score | QA Engine | **P0** | Phase 6 | `qa_execution_runs` | `dq_score` (DECIMAL(5, 2)), `ref_dq_dimensions.weight` | Formula Unit Test | Schema Ready |
 | **FR-QA-010** | Support manual and scheduled batch execution | QA Engine | **P1** | Phase 5 | `qa_execution_runs` | `run_id` (PK), `run_reference` (UQ), `batch_identifier`, `started_at` | API Runner Test | Schema Ready |
 | **FR-QA-011** | Log rule execution telemetry and latency | QA Engine | **P1** | Phase 5 | `qa_results` | `execution_duration_ms`, `records_evaluated`, `issues_detected` | Execution Telemetry Test | Schema Ready |
-| **FR-CLM-001** | Store claim header records with status | Claims | **P0** | Phase 2 | `claims` | `claim_id` (PK), `claim_reference` (UQ), `current_status_code` (FK), `total_billed_amount` | Schema DDL & Test | **Implemented** |
-| **FR-CLM-002** | Store itemized claim line records | Claims | **P0** | Phase 2 | `claim_lines` | `claim_line_id` (PK), `claim_id` (FK), `units`, `unit_price`, `line_billed_amount` | Schema DDL & Test | **Implemented** |
+| **FR-CLM-001** | Store claim header records with status | Claims | **P0** | Phase 2/3 | `generator/generators/claims.py` | `claim_id` (PK), `claim_reference` (UQ), `current_status_code` (FK), `total_billed_amount` | Pipeline Insert & SQL Audit | **Implemented** |
+| **FR-CLM-002** | Store itemized claim line records | Claims | **P0** | Phase 2/3 | `generator/generators/claim_lines.py` | `claim_line_id` (PK), `claim_id` (FK), `units`, `unit_price`, `line_billed_amount` | Itemization Math Audit | **Implemented** |
 | **FR-CLM-003** | Multi-attribute claims search and filtering | Claims | **P1** | Phase 7/8 | `claims` | `idx_claims_status_sub`, `idx_claims_pat`, `idx_claims_prov`, `idx_claims_payer` | API & UI Integration Test | Schema Ready |
 | **FR-CLM-004** | Comprehensive claim detail view | Claims | **P1** | Phase 8 | `claims`, `claim_lines`, `claim_status_history` | Normalized 1:N relations to lines, payments, adjustments, and issues | UI Component Test | Schema Ready |
-| **FR-CLM-005** | Validate header billed sum equals line sums | Claims | **P0** | Phase 5 | `claims`, `claim_lines` | `claims.total_billed_amount`, `claim_lines.line_billed_amount` | SQL Validation Rule | Schema Ready |
-| **FR-ANL-001** | Store payment transaction records | Analytics | **P0** | Phase 2 | `remittances`, `payments` | `payment_id` (PK), `remittance_id` (FK), `claim_id` (FK), `paid_amount` (DECIMAL(12,2)) | Schema DDL & Test | **Implemented** |
-| **FR-ANL-002** | Store adjustment and denial records | Analytics | **P0** | Phase 2 | `adjustments`, `denials` | `adjustment_id` (PK), `group_code` (FK `ref_adjustment_group_codes`), `denial_code` | Schema DDL & Test | **Implemented** |
-| **FR-ANL-003** | Detect overpayments (Paid $>$ Billed) | Analytics | **P0** | Phase 5 | `claims`, `payments` | `claims.total_billed_amount`, `payments.paid_amount` | Injected Overpayment Test | Schema Ready |
-| **FR-ANL-004** | Detect negative monetary values | Analytics | **P0** | Phase 5 | All financial tables | MySQL 8.x `CHECK (... >= 0.00)` constraints | Negative Value Injection | **Implemented** |
-| **FR-ANL-005** | Detect reconciliation equation discrepancies | Analytics | **P0** | Phase 5 | `reconciliations` | `reconciliation_id` (PK), `variance_amount`, `reconciliation_status` | Financial Balancing Test | **Implemented** |
-| **FR-ANL-006** | Detect duplicate payment transactions | Analytics | **P0** | Phase 5 | `remittances`, `payments` | `remittances.check_trace_number` (UQ), `payments.payment_reference` (UQ) | Duplicate Payment Test | Schema Ready |
+| **FR-CLM-005** | Validate header billed sum equals line sums | Claims | **P0** | Phase 3/5 | `generator/financials.py` (`sum_claim_lines`) | `claims.total_billed_amount`, `claim_lines.line_billed_amount` | SQL Validation Check | **Implemented** |
+| **FR-ANL-001** | Store payment transaction records | Analytics | **P0** | Phase 2/3 | `generator/generators/payments.py` | `payment_id` (PK), `remittance_id` (FK), `claim_id` (FK), `paid_amount` (DECIMAL(12,2)) | Batch Allocation & Audit | **Implemented** |
+| **FR-ANL-002** | Store adjustment and denial records | Analytics | **P0** | Phase 2/3 | `generator/generators/adjustments.py` | `adjustment_id` (PK), `group_code` (FK `ref_adjustment_group_codes`), `denial_code` | Adjustment Sum Audit | **Implemented** |
+| **FR-ANL-003** | Detect overpayments (Paid $>$ Billed) | Analytics | **P0** | Phase 3/5 | `generator/financials.py` | `claims.total_billed_amount`, `payments.paid_amount` | Financial Invariant Test | **Implemented** |
+| **FR-ANL-004** | Detect negative monetary values | Analytics | **P0** | Phase 2/3 | All financial tables | MySQL 8.x `CHECK (... >= 0.00)` constraints | Negative Value Guard | **Implemented** |
+| **FR-ANL-005** | Detect reconciliation equation discrepancies | Analytics | **P0** | Phase 3/5 | `generator/generators/reconciliations.py` | `reconciliation_id` (PK), `variance_amount`, `reconciliation_status` | Zero-Variance SQL Audit | **Implemented** |
+| **FR-ANL-006** | Detect duplicate payment transactions | Analytics | **P0** | Phase 3/5 | `generator/generators/remittances.py` | `remittances.check_trace_number` (UQ), `payments.payment_reference` (UQ) | Unique Constraint Audit | **Implemented** |
 | **FR-ANL-007** | Aggregate total financial variance at risk | Analytics | **P1** | Phase 6 | `reconciliations`, `issues` | `issues.variance_amount`, `reconciliations.variance_amount` | Financial Rollup Test | Schema Ready |
 | **FR-ISS-001** | Automatically generate unique issue records | Issues | **P0** | Phase 5 | `issues` | `issue_id` (PK), `issue_reference` (UQ), `rule_id` (FK), `claim_id` (FK) | Engine Generation Test | Schema Ready |
 | **FR-ISS-002** | Enforce issue lifecycle state machine | Issues | **P0** | Phase 7/9 | `ref_issue_statuses`, `issue_history` | `current_status_code` (FK), `issue_history.previous_status_code` (FK) | FSM State Transition Test | **Implemented** |
@@ -79,19 +79,15 @@ ClaimIQ uses a four-level priority classification to govern implementation phase
 
 ---
 
-## 3. Non-Functional Requirements Traceability (MySQL 8.x)
+## 3. Non-Functional Requirements Traceability (Phase 3 Execution)
 
-| Requirement ID | Summary | Category | Priority | Target Phase | MySQL 8.x Implementation Mechanism | Validation Method | Status |
+| Requirement ID | Summary | Category | Priority | Target Phase | Implementation Mechanism | Validation Method | Status |
 | :--- | :--- | :---: | :---: | :---: | :--- | :--- | :---: |
-| **NFR-DI-001** | Deterministic QA execution ($100\%$) | Data Integrity | **P0** | Phase 5 | MySQL deterministic SQL query syntax & consistent ordering | Repeated Run Hash Test | Schema Ready |
-| **NFR-DI-002** | ACID transaction compliance | Data Integrity | **P0** | Phase 2/7 | InnoDB row-level locking & ACID transactional commit/rollback | Rollback & Commit Test | **Implemented** |
-| **NFR-DI-003** | Fixed-point financial precision | Data Integrity | **P0** | Phase 2 | `DECIMAL(12, 2)` data types across all monetary columns | Precision Boundary Test | **Implemented** |
-| **NFR-PRF-001** | 100k claims QA execution $<30$s | Performance | **P0** | Phase 5 | InnoDB B-Tree indexes on FKs, status, and dates | Benchmark Load Test | Schema Ready |
-| **NFR-PRF-002** | Dashboard $p95$ latency $<200$ms | Performance | **P1** | Phase 7/8 | Composite B-Tree indexes on `(current_status_code, severity_code)` | Load & Latency Test | Schema Ready |
-| **NFR-PRF-003** | Search/filter latency $<300$ms | Performance | **P1** | Phase 7/8 | Secondary indexes on `claim_reference`, `patient_id`, `npi` | Filter Query Benchmark | Schema Ready |
-| **NFR-PRF-004** | Relational scale up to 1M claims | Scalability | **P1** | Phase 2/5 | 64-bit `BIGINT UNSIGNED` surrogate keys & compact B-Trees | 1M Record Stress Test | Schema Ready |
-| **NFR-SEC-001** | Zero PHI containment enforcement | Security | **P0** | Phase 3/11 | Strict synthetic data generation rules | Automated Code/Data Scan | Schema Ready |
-| **NFR-SEC-002** | RBAC token authorization | Security | **P0** | Phase 7 | Backend JWT authorization & endpoint role guards | Security Pen Test | Schema Ready |
-| **NFR-SEC-003** | SQL injection prevention | Security | **P0** | Phase 7 | Parameterized queries via `pymysql` / ORM | Static Analysis & DAST | Schema Ready |
-| **NFR-REL-001** | Single-rule error fault isolation | Reliability | **P0** | Phase 5 | Isolated transaction blocks per rule execution in runner | Injected Rule Syntax Error | Schema Ready |
-| **NFR-REL-002** | Reproducible schema & seed generation | Reliability | **P0** | Phase 2/11 | `001_initial_schema.sql` deterministic migration script | Clean Environment Rebuild | **Implemented** |
+| **NFR-DI-001** | Deterministic generation ($100\%$) | Data Integrity | **P0** | Phase 3 | Centralized `random.Random(seed)` & `Faker.seed(seed)` | Seed 42 Repeat Hash Test | **Implemented** |
+| **NFR-DI-002** | ACID transaction compliance | Data Integrity | **P0** | Phase 2/3 | InnoDB row-level locking & transactional commit boundaries | Commit & Rollback Test | **Implemented** |
+| **NFR-DI-003** | Fixed-point financial precision | Data Integrity | **P0** | Phase 2/3 | `Decimal(12, 2)` & `ROUND_HALF_UP` arithmetic | Zero-Variance SQL Audit | **Implemented** |
+| **NFR-PRF-001** | 100k claims generation $<60$s | Performance | **P0** | Phase 3 | Chunked `executemany` (2,500 rows) & in-memory ID maps | Large Benchmark (32.5s) | **Implemented** |
+| **NFR-PRF-002** | Memory efficiency at scale | Scalability | **P0** | Phase 3 | Streamlined tuple generator pipeline (<500MB RAM at 100k) | Process Memory Benchmark | **Implemented** |
+| **NFR-SEC-001** | Zero PHI containment enforcement | Security | **P0** | Phase 3 | Fictional synthetic names, addresses, TINs, and Luhn NPIs | Synthetic Validation Audit | **Implemented** |
+| **NFR-SEC-003** | SQL injection prevention | Security | **P0** | Phase 3 | 100% Parameterized queries across all insert statements | Code Inspection & PyMySQL | **Implemented** |
+| **NFR-REL-002** | Safe database reset and reproducibility | Reliability | **P0** | Phase 3 | `safe_reset_database` purging transactional data cleanly | Reset & Re-generation Test | **Implemented** |
