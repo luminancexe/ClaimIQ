@@ -17,34 +17,34 @@ Strict adherence to Phase 1 boundaries was maintained throughout: **zero impleme
 
 | # | Phase 1 Verification Criterion | Status | Primary Reference Artifact |
 | :---: | :--- | :---: | :--- |
-| 1 | Project purpose, problem statement, and scope clearly defined | **VERIFIED** | [`docs/project-overview.md`](file:///c:/Users/Noman/Downloads/ClaimIQ/docs/project-overview.md) |
-| 2 | Healthcare RCM workflow and 9-stage lifecycle documented | **VERIFIED** | [`docs/rcm-domain-overview.md`](file:///c:/Users/Noman/Downloads/ClaimIQ/docs/rcm-domain-overview.md) |
-| 3 | Core entities (Patient, Provider, Encounter, Claim, Payment, Remittance) defined | **VERIFIED** | [`docs/rcm-domain-overview.md`](file:///c:/Users/Noman/Downloads/ClaimIQ/docs/rcm-domain-overview.md) |
-| 4 | Operational anomalies classified across 5 core categories | **VERIFIED** | [`docs/problem-definition.md`](file:///c:/Users/Noman/Downloads/ClaimIQ/docs/problem-definition.md) |
-| 5 | Five user personas, responsibilities, permissions & RBAC matrix defined | **VERIFIED** | [`docs/users-and-roles.md`](file:///c:/Users/Noman/Downloads/ClaimIQ/docs/users-and-roles.md) |
-| 6 | 16 formal operational use cases (`UC-001`–`UC-016`) specified | **VERIFIED** | [`docs/use-cases.md`](file:///c:/Users/Noman/Downloads/ClaimIQ/docs/use-cases.md) |
-| 7 | 60+ numbered functional requirements (`FR-DM`, `FR-QA`, `FR-CLM`, etc.) documented | **VERIFIED** | [`docs/functional-requirements.md`](file:///c:/Users/Noman/Downloads/ClaimIQ/docs/functional-requirements.md) |
-| 8 | Quantitative non-functional requirements (performance, latency, integrity) established | **VERIFIED** | [`docs/non-functional-requirements.md`](file:///c:/Users/Noman/Downloads/ClaimIQ/docs/non-functional-requirements.md) |
-| 9 | 7-dimension healthcare Data Quality Framework and DQ scoring formulas established | **VERIFIED** | [`docs/data-quality-framework.md`](file:///c:/Users/Noman/Downloads/ClaimIQ/docs/data-quality-framework.md) |
-| 10 | 4-tier Severity Model (Critical, High, Medium, Low) and SLAs defined | **VERIFIED** | [`docs/severity-model.md`](file:///c:/Users/Noman/Downloads/ClaimIQ/docs/severity-model.md) |
-| 11 | Claim Lifecycle FSM, transition triggers, and invalid combinations specified | **VERIFIED** | [`docs/claim-lifecycle.md`](file:///c:/Users/Noman/Downloads/ClaimIQ/docs/claim-lifecycle.md) |
-| 12 | Issue Lifecycle FSM, root-cause categories, and transition rules specified | **VERIFIED** | [`docs/issue-lifecycle.md`](file:///c:/Users/Noman/Downloads/ClaimIQ/docs/issue-lifecycle.md) |
-| 13 | 10-step daily operational workflow and daily/weekly analyst cadences documented | **VERIFIED** | [`docs/operational-workflow.md`](file:///c:/Users/Noman/Downloads/ClaimIQ/docs/operational-workflow.md) |
-| 14 | 8 standard operational reports and required metric rollups specified | **VERIFIED** | [`docs/reporting-requirements.md`](file:///c:/Users/Noman/Downloads/ClaimIQ/docs/reporting-requirements.md) |
-| 15 | System vs. Business/Operational success metrics and formulas defined | **VERIFIED** | [`docs/success-metrics.md`](file:///c:/Users/Noman/Downloads/ClaimIQ/docs/success-metrics.md) |
-| 16 | Strict In-Scope vs. Out-of-Scope system boundaries documented | **VERIFIED** | [`docs/project-scope.md`](file:///c:/Users/Noman/Downloads/ClaimIQ/docs/project-scope.md) |
-| 17 | 12-phase project dependency roadmap mapped from Phase 1 to Phase 12 | **VERIFIED** | [`docs/project-scope.md`](file:///c:/Users/Noman/Downloads/ClaimIQ/docs/project-scope.md) |
-| 18 | Requirements Traceability Matrix (RTM) linking FRs/NFRs to phases & priorities | **VERIFIED** | [`docs/requirements-traceability-matrix.md`](file:///c:/Users/Noman/Downloads/ClaimIQ/docs/requirements-traceability-matrix.md) |
-| 19 | Four-tier priority model (P0 Essential, P1 Important, P2, P3) defined | **VERIFIED** | [`docs/requirements-traceability-matrix.md`](file:///c:/Users/Noman/Downloads/ClaimIQ/docs/requirements-traceability-matrix.md) |
+| 1 | Project purpose, problem statement, and scope clearly defined | **VERIFIED** | [`docs/project-overview.md`](../docs/project-overview.md) |
+| 2 | Healthcare RCM workflow and 9-stage lifecycle documented | **VERIFIED** | [`docs/rcm-domain-overview.md`](../docs/rcm-domain-overview.md) |
+| 3 | Core entities (Patient, Provider, Encounter, Claim, Payment, Remittance) defined | **VERIFIED** | [`docs/rcm-domain-overview.md`](../docs/rcm-domain-overview.md) |
+| 4 | Operational anomalies classified across 5 core categories | **VERIFIED** | [`docs/problem-definition.md`](../docs/problem-definition.md) |
+| 5 | Five user personas, responsibilities, permissions & RBAC matrix defined | **VERIFIED** | [`docs/users-and-roles.md`](../docs/users-and-roles.md) |
+| 6 | 16 formal operational use cases (`UC-001`–`UC-016`) specified | **VERIFIED** | [`docs/use-cases.md`](../docs/use-cases.md) |
+| 7 | 60+ numbered functional requirements (`FR-DM`, `FR-QA`, `FR-CLM`, etc.) documented | **VERIFIED** | [`docs/functional-requirements.md`](../docs/functional-requirements.md) |
+| 8 | Quantitative non-functional requirements (performance, latency, integrity) established | **VERIFIED** | [`docs/non-functional-requirements.md`](../docs/non-functional-requirements.md) |
+| 9 | 7-dimension healthcare Data Quality Framework and DQ scoring formulas established | **VERIFIED** | [`docs/data-quality-framework.md`](../docs/data-quality-framework.md) |
+| 10 | 4-tier Severity Model (Critical, High, Medium, Low) and SLAs defined | **VERIFIED** | [`docs/severity-model.md`](../docs/severity-model.md) |
+| 11 | Claim Lifecycle FSM, transition triggers, and invalid combinations specified | **VERIFIED** | [`docs/claim-lifecycle.md`](../docs/claim-lifecycle.md) |
+| 12 | Issue Lifecycle FSM, root-cause categories, and transition rules specified | **VERIFIED** | [`docs/issue-lifecycle.md`](../docs/issue-lifecycle.md) |
+| 13 | 10-step daily operational workflow and daily/weekly analyst cadences documented | **VERIFIED** | [`docs/operational-workflow.md`](../docs/operational-workflow.md) |
+| 14 | 8 standard operational reports and required metric rollups specified | **VERIFIED** | [`docs/reporting-requirements.md`](../docs/reporting-requirements.md) |
+| 15 | System vs. Business/Operational success metrics and formulas defined | **VERIFIED** | [`docs/success-metrics.md`](../docs/success-metrics.md) |
+| 16 | Strict In-Scope vs. Out-of-Scope system boundaries documented | **VERIFIED** | [`docs/project-scope.md`](../docs/project-scope.md) |
+| 17 | 12-phase project dependency roadmap mapped from Phase 1 to Phase 12 | **VERIFIED** | [`docs/project-scope.md`](../docs/project-scope.md) |
+| 18 | Requirements Traceability Matrix (RTM) linking FRs/NFRs to phases & priorities | **VERIFIED** | [`docs/requirements-traceability-matrix.md`](../docs/requirements-traceability-matrix.md) |
+| 19 | Four-tier priority model (P0 Essential, P1 Important, P2, P3) defined | **VERIFIED** | [`docs/requirements-traceability-matrix.md`](../docs/requirements-traceability-matrix.md) |
 | 20 | All documentation verified for internal consistency and zero premature code | **VERIFIED** | Complete Project Workspace |
 
 ---
 
 ## 3. Inventory of Phase 1 Deliverables
 
-The complete documentation suite is organized within `docs/` and root:
+The complete documentation suite is organized within `docs/` and `reports/`:
 
-```
+```text
 ClaimIQ/
 ├── docs/
 │   ├── project-overview.md                 # System identity, purpose, role alignment & non-goals
@@ -63,7 +63,8 @@ ClaimIQ/
 │   ├── success-metrics.md                  # System performance vs. Business RCM metric benchmarks
 │   ├── project-scope.md                    # In-scope/Out-of-scope & 12-phase dependency roadmap
 │   └── requirements-traceability-matrix.md # Full RTM linking all FRs/NFRs to target phases
-└── PHASE_1_COMPLETION_REPORT.md            # Official sign-off and phase transition verification
+└── reports/
+    └── PHASE_1_COMPLETION_REPORT.md        # Official sign-off and phase transition verification
 ```
 
 ---
