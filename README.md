@@ -265,8 +265,8 @@ ClaimIQ is divided into 12 major phases.
 | **Phase 1** | Domain Research, Scope & Requirements | ✅ Complete |
 | **Phase 2** | Database Architecture & Data Modeling | ✅ Complete |
 | **Phase 3** | Synthetic Data Generation | ✅ Complete |
-| **Phase 4** | Controlled Data Error Injection | 🔜 Next |
-| **Phase 5** | SQL Data Quality Engine | ⏳ Planned |
+| **Phase 4** | Controlled Data Error Injection | ✅ Complete |
+| **Phase 5** | SQL Data Quality Engine | 🔜 Next |
 | **Phase 6** | Python Analytics Engine | ⏳ Planned |
 | **Phase 7** | Backend & API | ⏳ Planned |
 | **Phase 8** | Operations Dashboard | ⏳ Planned |
@@ -451,6 +451,78 @@ The generated dataset represents a clean operational baseline ready for Phase 4 
 
 ---
 
+# 💉 Phase 4 — Controlled Error Injection & Anomaly Datasets
+
+Phase 4 implemented the deterministic error injection framework capable of creating controlled, realistic, traceable defects in copies of the clean Phase 3 baseline dataset.
+
+Documentation and injection modules include:
+
+```text
+docs/
+├── phase-4-error-injection.md
+├── anomaly-taxonomy.md
+├── injection-profiles.md
+├── anomaly-ground-truth.md
+├── anomaly-validation.md
+└── phase-4-test-results.md
+
+database/schema/
+└── 10_ground_truth_tables.sql
+
+generator/
+├── inject.py
+└── injector/
+    ├── models.py
+    ├── taxonomy.py
+    ├── profiles.py
+    ├── engine.py
+    ├── ground_truth.py
+    ├── validators.py
+    ├── cli.py
+    └── mutators/
+        ├── completeness.py
+        ├── duplication.py
+        ├── referential.py
+        ├── financial.py
+        ├── temporal.py
+        ├── lifecycle.py
+        ├── business_logic.py
+        └── formatting.py
+
+tests/
+├── test_anomaly_selection.py
+├── test_anomaly_determinism.py
+├── test_financial_anomalies.py
+├── test_temporal_anomalies.py
+├── test_duplicate_anomalies.py
+├── test_lifecycle_anomalies.py
+├── test_ground_truth.py
+├── test_reset.py
+└── test_injection_profiles.py
+
+reports/
+└── PHASE_4_COMPLETION_REPORT.md
+```
+
+Phase 4 established:
+
+- Authoritative **67-anomaly taxonomy** (`E001`–`E067`) spanning all 8 core defect categories
+- Deterministic multi-scale injection profiles (`clean`, `light`: ~1%, `moderate`: ~5%, `heavy`: ~10%, `targeted`)
+- Explicit **Ground Truth Registry** (`anomaly_ground_truth` table in MySQL 8.x + JSON export)
+- Dry-run simulation mode (`python -m generator.inject --profile moderate --seed 42 --dry-run`)
+- Targeted anomaly injection CLI (`python -m generator.inject --profile targeted --anomaly E023,E030,E034`)
+- Automated anomaly validation suite auditing live database state against ground truth
+- Precise two-way mutation reversion (`python -m generator.inject --reset-anomalies`)
+- Comprehensive test suite (41 unit & regression tests passing in 0.57s)
+
+### Phase 4 Status
+
+**Complete and verified.**
+
+The anomalous datasets and ground truth registry are ready for Phase 5 automated QA rule evaluation.
+
+---
+
 # 🔐 Data & Privacy
 
 ClaimIQ is intentionally designed around synthetic data.
@@ -595,7 +667,8 @@ License information will be added as the project progresses.
 - **Phase 1 — Domain Research, Scope & Requirements Definition:** ✅ Complete
 - **Phase 2 — Database Architecture & Data Modeling:** ✅ Complete
 - **Phase 3 — Synthetic Healthcare Claims Data Generation:** ✅ Complete
-- **Next Phase: Phase 4 — Controlled Data Error Injection & Anomaly Dataset Generation** (🔜 Next)
+- **Phase 4 — Controlled Error Injection & Anomaly Dataset Engineering:** ✅ Complete
+- **Next Phase: Phase 5 — SQL Data Quality & QA Engine** (🔜 Next)
 
 ---
 
