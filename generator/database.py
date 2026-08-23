@@ -28,6 +28,7 @@ def safe_reset_database(conn: pymysql.Connection) -> Dict[str, int]:
     Preserves reference tables, schema migrations, and QA metadata definitions.
     """
     deletion_order = [
+        "anomaly_ground_truth",
         "reconciliations",
         "denials",
         "adjustments",
