@@ -11,7 +11,7 @@ ClaimIQ uses a four-level priority classification to govern implementation phase
 
 ---
 
-## 2. Comprehensive Traceability Matrix (Updated for Phase 4: Error Injection & Anomaly Datasets)
+## 2. Comprehensive Traceability Matrix (Updated for Phase 6: Python Analytics Engine)
 
 | Requirement ID | Requirement Summary | Category | Priority | Target Phase | Implementation Module / Entity | Column(s) & Constraints (MySQL 8.x) | Validation Method | Current Status |
 | :--- | :--- | :---: | :---: | :---: | :--- | :--- | :--- | :---: |
@@ -44,7 +44,7 @@ ClaimIQ uses a four-level priority classification to govern implementation phase
 | **FR-ANL-004** | Detect negative monetary values | Analytics | **P0** | Phase 2/3 | All financial tables | MySQL 8.x `CHECK (... >= 0.00)` constraints | Negative Value Guard | **Implemented** |
 | **FR-ANL-005** | Detect reconciliation equation discrepancies | Analytics | **P0** | Phase 3/4/5 | `qa/rules/financial.py` (`R-E029`) | `reconciliation_id` (PK), `variance_amount`, `reconciliation_status` | Variance Mutation Test | **Implemented** |
 | **FR-ANL-006** | Detect duplicate payment transactions | Analytics | **P0** | Phase 3/4/5 | `qa/rules/duplication.py` (`R-E013`) | `remittances.check_trace_number` (UQ), `payments.payment_reference` (UQ) | Duplicate Payment Test | **Implemented** |
-| **FR-ANL-007** | Aggregate total financial variance at risk | Analytics | **P1** | Phase 6 | `reconciliations`, `issues` | `issues.variance_amount`, `reconciliations.variance_amount` | Financial Rollup Test | Schema Ready |
+| **FR-ANL-007** | Aggregate total financial variance at risk | Analytics | **P1** | Phase 6 | `analytics/financial.py` | `issues.variance_amount`, `reconciliations.variance_amount` | Financial Exposure Test | **Implemented** |
 | **FR-ISS-001** | Automatically generate unique issue records | Issues | **P0** | Phase 5 | `qa/database.py` (`save_detected_issues`) | `issue_id` (PK), `issue_reference` (UQ), `rule_id` (FK), `claim_id` (FK) | Engine Generation Test | **Implemented** |
 | **FR-ISS-002** | Enforce issue lifecycle state machine | Issues | **P0** | Phase 7/9 | `ref_issue_statuses`, `issue_history` | `current_status_code` (FK), `issue_history.previous_status_code` (FK) | FSM State Transition Test | **Implemented** |
 | **FR-ISS-003** | Enforce user assignment before investigation | Issues | **P1** | Phase 7/9 | `issues` | `assigned_to_user` (VARCHAR 100) | Validation Rule & API Test | Schema Ready |
@@ -53,12 +53,12 @@ ClaimIQ uses a four-level priority classification to govern implementation phase
 | **FR-ISS-006** | Require justification notes for resolutions | Issues | **P0** | Phase 7/9 | `issue_history`, `issue_notes` | `issue_history.transition_notes` (TEXT), `issue_notes.note_text` (TEXT) | Mandatory Field Test | Schema Ready |
 | **FR-ISS-007** | Support user and team assignment | Issues | **P1** | Phase 7/9 | `issues` | `assigned_to_user`, `idx_issues_assigned` | Assignment API Test | Schema Ready |
 | **FR-ISS-008** | Support bulk triage and status updates | Issues | **P2** | Phase 9 | `issues` | `idx_issues_status_sev` compound index | Bulk Action Test | Schema Ready |
-| **FR-REP-001** | Generate Daily Data Quality Report | Reporting | **P0** | Phase 6/8 | `qa_execution_runs`, `issues` | `qa_execution_runs.dq_score`, `issues.severity_code` | Report Output Test | Schema Ready |
-| **FR-REP-002** | Generate Weekly Operations & SLA Report | Reporting | **P1** | Phase 6/8 | `issues`, `ref_severities` | `ref_severities.sla_hours`, `issues.detected_at`, `issues.resolved_at` | Metrics Rollup Test | Schema Ready |
-| **FR-REP-003** | Generate Provider Quality Scorecard | Reporting | **P1** | Phase 6/8 | `providers`, `claims`, `issues` | `claims.billing_provider_id`, `idx_claims_prov` | Provider Aggregation Test | Schema Ready |
-| **FR-REP-004** | Generate Payer Adjudication Report | Reporting | **P1** | Phase 6/8 | `payers`, `claims`, `denials` | `claims.payer_id`, `idx_claims_payer`, `denials.denial_code` | Payer Aggregation Test | Schema Ready |
-| **FR-REP-005** | Generate Financial Discrepancy Ledger | Reporting | **P0** | Phase 6/8 | `reconciliations`, `issues` | `reconciliations.variance_amount`, `issues.variance_amount` | Ledger Export Test | Schema Ready |
-| **FR-REP-006** | Support export to CSV, PDF, and JSON | Reporting | **P1** | Phase 9 | All reporting views | Structured relational query support | File Stream Test | Planned (Phase 9) |
+| **FR-REP-001** | Generate Daily Data Quality Report | Reporting | **P0** | Phase 6/8 | `analytics/trends.py` (`calculate_dq_trends`) | `qa_execution_runs.dq_score`, `issues.severity_code` | Unit & CLI Integration Test | **Implemented** |
+| **FR-REP-002** | Generate Weekly Operations & SLA Report | Reporting | **P1** | Phase 6/8 | `analytics/kpis.py` (`calculate_kpi_overview`) | `ref_severities.sla_hours`, `issues.detected_at`, `issues.resolved_at` | Unit & CLI Integration Test | **Implemented** |
+| **FR-REP-003** | Generate Provider Quality Scorecard | Reporting | **P1** | Phase 6/8 | `analytics/scorecards.py` (`generate_provider_scorecards`) | `claims.billing_provider_id`, `idx_claims_prov` | Scorecard Aggregation Test | **Implemented** |
+| **FR-REP-004** | Generate Payer Adjudication Report | Reporting | **P1** | Phase 6/8 | `analytics/scorecards.py` (`generate_payer_scorecards`) | `claims.payer_id`, `idx_claims_payer`, `denials.denial_code` | Payer Aggregation Test | **Implemented** |
+| **FR-REP-005** | Generate Financial Discrepancy Ledger | Reporting | **P0** | Phase 6/8 | `analytics/financial.py` (`calculate_financial_exposure`) | `reconciliations.variance_amount`, `issues.variance_amount` | Exposure & Invariant Test | **Implemented** |
+| **FR-REP-006** | Support export to CSV, PDF, and JSON | Reporting | **P1** | Phase 6/9 | `analytics/cli.py` (`--output`) | Structured analytical model export | JSON Export Integration Test | **Implemented** |
 | **FR-DOC-001** | Maintain centralized QA Rules Knowledge Base | Documentation| **P1** | Phase 10 | `qa_rules`, `qa_rule_categories` | `qa_rules.description`, `qa_rules.sql_logic` | Content & UI Test | Schema Ready |
 | **FR-DOC-002** | Document rule SQL logic and remediation SOPs | Documentation| **P1** | Phase 10 | `qa_rules` | `qa_rules.sql_logic`, `qa_rules.description` | Knowledge Base Audit | Schema Ready |
 | **FR-DOC-003** | Deep-link issues directly to rule documentation | Documentation| **P1** | Phase 9/10 | `issues`, `qa_rules` | `issues.rule_id` (FK `qa_rules.rule_id`) | Deep-Link Navigation Test | Schema Ready |
@@ -79,13 +79,13 @@ ClaimIQ uses a four-level priority classification to govern implementation phase
 
 ---
 
-## 3. Non-Functional Requirements Traceability (Phase 4 Error Injection)
+## 3. Non-Functional Requirements Traceability (Phase 6 Analytics Engine)
 
 | Requirement ID | Summary | Category | Priority | Target Phase | Implementation Mechanism | Validation Method | Status |
 | :--- | :--- | :---: | :---: | :---: | :--- | :--- | :---: |
-| **NFR-DI-001** | Deterministic error injection ($100\%$) | Data Integrity | **P0** | Phase 4 | Centralized `GeneratorRandomState(seed)` | Seed 42 Repeatability Test | **Implemented** |
-| **NFR-DI-002** | ACID transaction compliance | Data Integrity | **P0** | Phase 2/4 | Atomic mutation commits & rollback on failure | Transaction Rollback Test | **Implemented** |
-| **NFR-DI-003** | Clean baseline reversibility | Data Integrity | **P0** | Phase 4 | Two-way reversion engine (`--reset-anomalies`) | Post-Reset Phase 3 Audit | **Implemented** |
-| **NFR-PRF-001** | High throughput mutation execution | Performance | **P0** | Phase 4 | Batch parameterized mutation updates | Profile Injection Benchmarks | **Implemented** |
-| **NFR-SEC-001** | Zero PHI containment enforcement | Security | **P0** | Phase 3/4 | Fictional synthetic mutations; zero real PHI | Synthetic Audit Verification | **Implemented** |
-| **NFR-REL-002** | Safe database reset and reproducibility | Reliability | **P0** | Phase 3/4 | Dependency-safe reset + ground truth restoration | Reset & Re-injection Test | **Implemented** |
+| **NFR-ANL-001** | Deterministic Analytical Calculations ($100\%$) | Analytics | **P0** | Phase 6 | Fixed arithmetic, deterministic tie-breaking | `test_analytics_determinism.py` | **Implemented** |
+| **NFR-ANL-002** | Exact Fixed-Point Currency Math | Precision | **P0** | Phase 6 | `Decimal` arithmetic quantized to `0.01` | `test_analytics_financial.py` | **Implemented** |
+| **NFR-ANL-003** | Read-Only Database Session Safety | Security | **P0** | Phase 6 | `SET SESSION TRANSACTION READ ONLY` | `analytics/database.py` Audit | **Implemented** |
+| **NFR-ANL-004** | Sub-Second Execution Benchmark | Performance | **P0** | Phase 6 | Optimized parameterized analytical queries | Benchmark Duration Test (<100ms) | **Implemented** |
+| **NFR-ANL-005** | Pareto 80/20 Concentration Engine | Analytics | **P0** | Phase 6 | Cumulative contribution ranking algorithm | `test_analytics_root_cause.py` | **Implemented** |
+| **NFR-ANL-006** | Repeat Cluster Pattern Detection | Analytics | **P0** | Phase 6 | Multi-entity recurrence clustering ($\ge 2$) | `test_analytics_recurrence.py` | **Implemented** |
