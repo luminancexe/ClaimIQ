@@ -1,12 +1,14 @@
-# Byte-compiled / optimized / DLL files
+# ============================================================================
+# ClaimIQ — Production-Grade .gitignore for Public Repository
+# ============================================================================
+
+# ----------------------------------------------------------------------------
+# 1. Byte-compiled / Optimized / Python Artifacts
+# ----------------------------------------------------------------------------
 __pycache__/
 *.py[cod]
 *$py.class
-
-# C extensions
 *.so
-
-# Distribution / packaging
 .Python
 build/
 develop-eggs/
@@ -20,40 +22,107 @@ parts/
 sdist/
 var/
 wheels/
+pip-wheel-metadata/
+share/python-wheels/
 *.egg-info/
 .installed.cfg
 *.egg
+MANIFEST
 
-# Virtual Environments
-.env
-.venv
-env/
+# ----------------------------------------------------------------------------
+# 2. Virtual Environments
+# ----------------------------------------------------------------------------
+.venv/
 venv/
+env/
 ENV/
 env.bak/
 venv.bak/
 
-# Unit test / coverage / pytest
-.tox/
-.nox/
+# ----------------------------------------------------------------------------
+# 3. Environment Variables, Credentials & Secret Keys
+# ----------------------------------------------------------------------------
+.env
+.env.*
+!.env.example
+!.env.template
+
+*.pem
+*.key
+*.p12
+*.pfx
+*.cert
+*.crt
+credentials.json
+secrets.json
+service-account.json
+client_secrets.json
+
+# ----------------------------------------------------------------------------
+# 4. IDE, Editors & Development Tools
+# ----------------------------------------------------------------------------
+.vscode/
+.idea/
+*.iml
+*.ipr
+*.iws
+*.swp
+*.swo
+*~
+*.bak
+
+# ----------------------------------------------------------------------------
+# 5. Operating System Junk
+# ----------------------------------------------------------------------------
+.DS_Store
+.DS_Store?
+._*
+.Spotlight-V100
+.Trashes
+ehthumbs.db
+Thumbs.db
+desktop.ini
+$RECYCLE.BIN/
+
+# ----------------------------------------------------------------------------
+# 6. Testing, Code Coverage & Linting Caches
+# ----------------------------------------------------------------------------
+.pytest_cache/
 .coverage
 .coverage.*
-.cache
+htmlcov/
+.tox/
+.nox/
+.cache/
+.mypy_cache/
+.pyre/
+.ruff_cache/
+.hypothesis/
 nosetests.xml
 coverage.xml
 *.cover
 *.py,cover
-.hypothesis/
-.pytest_cache/
 
-# IDE & Editor files
-.vscode/
-.idea/
-*.swp
-*.swo
-*~
-.DS_Store
-
-# Temporary & Local Logs
+# ----------------------------------------------------------------------------
+# 7. Logs & Temporary Files
+# ----------------------------------------------------------------------------
 *.log
+logs/
+*.tmp
+*.temp
+
+# ----------------------------------------------------------------------------
+# 8. Local Runtime Databases (Excludes versioned fixtures)
+# ----------------------------------------------------------------------------
+*.sqlite
+*.sqlite3
+*.db
+
+# ----------------------------------------------------------------------------
+# 9. Local Scratch & Runtime Generated Output Directories
+# ----------------------------------------------------------------------------
 scratch/
+reports/generated/
+reports/output/
+analytics/output/
+data/output/
