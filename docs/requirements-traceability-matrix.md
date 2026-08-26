@@ -89,3 +89,23 @@ ClaimIQ uses a four-level priority classification to govern implementation phase
 | **NFR-ANL-004** | Sub-Second Execution Benchmark | Performance | **P0** | Phase 6 | Optimized parameterized analytical queries | Benchmark Duration Test (<100ms) | **Implemented** |
 | **NFR-ANL-005** | Pareto 80/20 Concentration Engine | Analytics | **P0** | Phase 6 | Cumulative contribution ranking algorithm | `test_analytics_root_cause.py` | **Implemented** |
 | **NFR-ANL-006** | Repeat Cluster Pattern Detection | Analytics | **P0** | Phase 6 | Multi-entity recurrence clustering ($\ge 2$) | `test_analytics_recurrence.py` | **Implemented** |
+
+---
+
+## 4. Phase 7 Backend & API Traceability
+
+| Requirement ID | Summary | Category | Priority | Target Phase | Implementation Mechanism | Validation Method | Status |
+| :--- | :--- | :---: | :---: | :---: | :--- | :--- | :---: |
+| **FR-API-001** | FastAPI Application Factory | Architecture | **P0** | Phase 7 | `backend.app.create_app` factory with OpenAPI 3.x | `test_backend_openapi.py` | **Implemented** |
+| **FR-API-002** | JWT Token Authentication & Lifecycle | Security | **P0** | Phase 7 | PyJWT with HS256, access + refresh token flow | `test_backend_auth.py` | **Implemented** |
+| **FR-API-003** | Role-Based Access Control (RBAC) | Security | **P0** | Phase 7 | `require_role()` dependency for ADMIN, ANALYST, QA_REVIEWER, VIEWER | `test_backend_authorization.py` | **Implemented** |
+| **FR-API-004** | Read-Only Claims REST Endpoints | API | **P0** | Phase 7 | `/api/v1/claims` listing, detail, lines, history | `test_backend_claims.py` | **Implemented** |
+| **FR-API-005** | QA Engine & Telemetry Endpoints | API | **P0** | Phase 7 | `/api/v1/qa/rules`, `/runs`, `/results`, `/scores` | `test_backend_qa.py` | **Implemented** |
+| **FR-API-006** | Analytics Service Gateway | API | **P0** | Phase 7 | `/api/v1/analytics/overview`, `/financial`, `/kpis`, `/trends`, etc. | `test_backend_analytics.py` | **Implemented** |
+| **FR-API-007** | Provider & Payer Scorecard Endpoints | API | **P0** | Phase 7 | `/api/v1/providers`, `/api/v1/payers` with scorecards | `test_backend_providers.py`, `test_backend_payers.py` | **Implemented** |
+| **FR-API-008** | QA Issues & Worklist Inspection | API | **P0** | Phase 7 | `/api/v1/issues` paginated query with filters | `test_backend_issues.py` | **Implemented** |
+| **NFR-API-001** | Bounded Deterministic Pagination | Performance | **P0** | Phase 7 | `PaginatedResponse[T]` with max `page_size=500` | `test_backend_pagination.py` | **Implemented** |
+| **NFR-API-002** | Information Leak Prevention & Request ID | Security | **P0** | Phase 7 | `RequestIdMiddleware` & masked 500 error handler | `test_backend_errors.py` | **Implemented** |
+| **NFR-API-003** | Database Read-Only Session Invariant | Safety | **P0** | Phase 7 | `SET SESSION TRANSACTION READ ONLY` on all connections | `backend/database.py` Audit | **Implemented** |
+| **NFR-API-004** | Decimal-Aware Precision Serialization | Precision | **P0** | Phase 7 | Fixed string formatting for `DECIMAL(12,2)` | Schema Validation Tests | **Implemented** |
+
