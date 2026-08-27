@@ -234,25 +234,21 @@ The architecture will evolve throughout the project's phases.
 
 The technology stack will be finalized during the relevant implementation phases.
 
-Current planned technologies include:
-
 | Area | Technology |
 |---|---|
 | Database | MySQL 8.x (Storage Engine: InnoDB, Charset: utf8mb4) |
-| Financial Precision | DECIMAL(12,2) |
+| Financial Precision | DECIMAL(12,2) with Exact Fixed-Point String Math |
 | Temporal Standard | DATETIME(6), UTC |
-| Querying | SQL |
-| Data Generation | Python |
-| Data Analysis | Python / Pandas |
-| Backend | Python-based API |
-| Frontend | HTML / CSS / JavaScript |
-| Visualization | Charting library |
-| Testing | Python testing framework |
-| Containerization | Docker |
-| CI/CD | GitHub Actions |
-| AI | LLM/API-based assistant |
+| Querying | SQL / Parameterized Queries |
+| Data Generation | Python 3.10+ (Faker, Deterministic Seeds) |
+| Data Analysis | Python (Analytics Engine, Pareto 80/20, Recurrence) |
+| Backend | FastAPI (Python 3.10+, Pydantic v2, PyJWT, Uvicorn) |
+| Frontend | React 18 + TypeScript + Vite + Tailwind CSS |
+| Visualization | Recharts 2.x (Donuts, Trends, Pareto Curves, Score Bars) |
+| State & Cache | TanStack React Query 5.x |
+| Testing | pytest (Backend: 158 tests) + Vitest & RTL (Frontend: 29 tests) |
+| Architecture | Decoupled REST SPA with Strict Read-Only Database Invariant |
 
-Technology decisions will be documented as the project progresses.
 
 ---
 
@@ -717,7 +713,75 @@ The API layer is ready for Phase 8 Operations Dashboard consumption.
 
 ---
 
+# 🖥️ Phase 8 — Operations Dashboard
+
+Phase 8 delivered a production-ready, dark cinematic **React + TypeScript** operations and analytics dashboard consuming all 34 endpoints from the Phase 7 FastAPI REST API.
+
+Documentation and frontend modules include:
+
+```text
+docs/
+├── phase-8-frontend.md
+├── frontend-architecture.md
+├── frontend-authentication.md
+├── frontend-api-integration.md
+├── frontend-responsive-design.md
+└── frontend-testing.md
+
+frontend/
+├── index.html
+├── package.json
+├── tsconfig.json
+├── vite.config.ts
+├── tailwind.config.js
+└── src/
+    ├── api/           # Centralized typed API client with JWT refresh & retry
+    ├── types/         # Strict TypeScript models mirroring Pydantic schemas
+    ├── context/       # AuthContext with auto-refresh & ProtectedRoute
+    ├── components/    # AppShell, Header, Sidebar, MetricCard, DataTable, Charts, Filters
+    ├── features/      # 12 Operational feature pages (Dashboard, Claims, QA, Analytics, ...)
+    ├── utils/         # formatCurrency, formatPercentage, formatNumber, formatDate
+    └── __tests__/     # 10 Vitest test suites (29 tests passing)
+
+reports/
+└── PHASE_8_COMPLETION_REPORT.md
+```
+
+### Key Deliverables:
+- **Executive Operations Dashboard (`/dashboard`)**: 8 KPI metric cards, 7-dimension Data Quality score comparison, claim lifecycle status donut, financial reconciliation breakdown, longitudinal quality trend curves, and top Pareto defect drivers.
+- **Relational Claims Explorer (`/claims`, `/claims/:id`)**: Server-paginated claims explorer with status/search filtering, detail view with financial rollups, itemized CPT procedure lines, and chronological lifecycle status history.
+- **QA Observatory (`/qa/rules`, `/qa/runs`, `/qa/scores`)**: Complete catalog of all 67 QA validation rules (category & dimension filters), paginated execution runs history, per-rule telemetry duration metrics, and 7-dimension scorecard breakdown.
+- **Analytics Suite (`/analytics/*`)**: Dedicated dashboards for Financial reconciliation discrepancies, operational KPIs, longitudinal quality trends (Daily/Weekly/Monthly), Pareto 80/20 root-cause defect rankings, and entity repeat offender clusters.
+- **Provider & Payer Scorecards (`/providers/*`, `/payers/*`)**: Directory and detailed scorecards for provider quality and payer adjudication latency, payment turnaround velocity, and timely filing compliance.
+- **Read-Only Defect Explorer (`/issues`, `/issues/:id`)**: Strictly observational defect inspection isolating Phase 9+ investigation and resolution workflows.
+- **Authentication & RBAC**: Dual-token JWT lifecycle with silent refresh on 401, role-aware route guards (`ADMIN`, `ANALYST`, `QA_REVIEWER`, `VIEWER`), and quick-access dev login accounts.
+- **Multi-Viewport Responsive Design**: Adaptive layouts verified across 5 breakpoints (`375px`, `768px`, `1024px`, `1440px`, `1920px`).
+- **Comprehensive Automated Testing**: 29 frontend tests passing in Vitest (100% pass rate) + 158 backend tests passing in pytest.
+
+### Quickstart & Running ClaimIQ
+
+1. **Start Backend Server**:
+   ```bash
+   python -m backend
+   # API: http://localhost:8000/api/v1
+   # Swagger UI: http://localhost:8000/docs
+   ```
+
+2. **Start Frontend Dashboard**:
+   ```bash
+   cd frontend
+   npm run dev
+   # Dashboard: http://localhost:3000
+   ```
+
+### Phase 8 Status
+
+**Complete and verified.**
+
+---
+
 # 🔐 Data & Privacy
+
 
 ClaimIQ is intentionally designed around synthetic data.
 
@@ -865,9 +929,11 @@ License information will be added as the project progresses.
 - **Phase 5 — Data Quality & QA Rule Engine:** ✅ Complete
 - **Phase 6 — Python Analytics Engine & Advanced DQ Aggregation:** ✅ Complete
 - **Phase 7 — Backend & API (FastAPI REST Service Layer):** ✅ Complete
-- **Next Phase: Phase 8 — Operations Dashboard** (🔜 Next)
+- **Phase 8 — Operations Dashboard (React + TypeScript Frontend):** ✅ Complete
+- **Next Phase: Phase 9 — Investigation, Audit & Reporting** (🔜 Next)
 
 ---
+
 
 **ClaimIQ**  
 *Healthcare Claims Data Quality & Operations Platform*
