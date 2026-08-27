@@ -109,3 +109,22 @@ ClaimIQ uses a four-level priority classification to govern implementation phase
 | **NFR-API-003** | Database Read-Only Session Invariant | Safety | **P0** | Phase 7 | `SET SESSION TRANSACTION READ ONLY` on all connections | `backend/database.py` Audit | **Implemented** |
 | **NFR-API-004** | Decimal-Aware Precision Serialization | Precision | **P0** | Phase 7 | Fixed string formatting for `DECIMAL(12,2)` | Schema Validation Tests | **Implemented** |
 
+---
+
+## 5. Phase 8 Frontend & Operations Dashboard Traceability
+
+| Requirement ID | Summary | Category | Priority | Target Phase | Implementation Mechanism | Validation Method | Status |
+| :--- | :--- | :---: | :---: | :---: | :--- | :--- | :---: |
+| **FR-FE-001** | React + TypeScript SPA & Application Shell | Architecture | **P0** | Phase 8 | Vite, React 18, Tailwind CSS, `AppShell`, `Header`, `Sidebar`, `Breadcrumbs` | Vitest Component Tests & Build Verification | **Implemented** |
+| **FR-FE-002** | Centralized Typed API Client with JWT Refresh | API / Auth | **P0** | Phase 8 | `src/api/client.ts` with auto token injection, 401 retry, sanitized error mapping | `test/api_client.test.ts` | **Implemented** |
+| **FR-FE-003** | Role-Based Navigation & Route Guards | Security / UX | **P0** | Phase 8 | `AuthContext`, `ProtectedRoute`, `RoleGuard` for ADMIN, ANALYST, QA_REVIEWER, VIEWER | `test/auth_context.test.tsx` | **Implemented** |
+| **FR-FE-004** | Executive Operations & Data Quality Dashboard | Dashboard | **P0** | Phase 8 | `/dashboard` Top 8 KPIs, 7-dimension score bars, status donut, trends, Pareto drivers | `test/dashboard.test.tsx` | **Implemented** |
+| **FR-FE-005** | Claims Explorer & Itemized Detail Views | Claims | **P0** | Phase 8 | `/claims` server-paginated table, search & filters; `/claims/:id` lines & status history | `test/claims.test.tsx` | **Implemented** |
+| **FR-FE-006** | QA Observatory Catalog, Runs & 7-Dimension Scorecard | QA Engine | **P0** | Phase 8 | `/qa/rules` 67 rules catalog, `/qa/runs` batch history, `/qa/runs/:id` telemetry, `/qa/scores` | `test/qa.test.tsx` | **Implemented** |
+| **FR-FE-007** | Analytics Suite, Scorecards & Read-Only Issues Explorer | Analytics | **P0** | Phase 8 | `/analytics/*` (Financial, KPIs, Trends, Pareto, Recurrence), `/providers`, `/payers`, `/issues` | `test/analytics.test.tsx`, `test/scorecards.test.tsx`, `test/issues.test.tsx` | **Implemented** |
+| **NFR-FE-001** | Dark Cinematic Multi-Viewport Responsive Design | Usability | **P0** | Phase 8 | Responsive grid, collapsible mobile drawer, adaptive tables (375px–1920px) | Manual Viewport Audit & Test Suite | **Implemented** |
+| **NFR-FE-002** | High-Precision Currency & Decimal Preservation | Precision | **P0** | Phase 8 | String Decimal preservation via `formatCurrency()` with `Intl.NumberFormat` | `test/format.test.ts` | **Implemented** |
+| **NFR-FE-003** | Strict Read-Only Boundary (Zero Mutation Creep) | Boundary | **P0** | Phase 8 | Observational UI only; zero state transition or triage buttons (Phase 9+ isolated) | `test/issues.test.tsx` | **Implemented** |
+| **NFR-FE-004** | Automated Frontend Component & Integration Testing | Quality | **P0** | Phase 8 | Vitest + React Testing Library (29 unit & integration tests) | `npm test` & `tsc --noEmit` | **Implemented** |
+
+
